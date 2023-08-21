@@ -24,32 +24,28 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         for line in reader.lines() {
             let line = line?;
             if line.contains(DEVICE_EVENT) {
-                let line = line.split_whitespace().collect::<Vec<_>>();
-                let value = line[10].parse::<i32>().unwrap();
-                let time = line[2].replace(',', "");
-                let time = time.parse::<f64>().unwrap();
-
+                let (time, val) = parse(&line)?;
                 if (time - last_exec) < 0.15 {
                     continue;
                 }
                 last_exec = time;
-                execute(value);
+                execute_command(val);
             }
         }
     }
-
     Ok(())
 }
 
-fn execute(i: i32) {
-    if i < 0 {
-        execute_up()
-    } else {
-        execute_down()
-    }
+fn parse(s: &str) -> Result<(f64, i32), Box<dyn std::error::Error>> {
+    let line = s.split_whitespace().collect::<Vec<_>>();
+    let val = line[10].parse::<i32>()?;
+    let time = line[2].replace(',', "");
+    let time = time.parse::<f64>()?;
+
+    Ok((time, val))
 }
 
-fn execute_up() {
+fn execute_pageup() {
     Command::new("sh")
         .arg("sudo")
         .arg("-c")
@@ -65,7 +61,7 @@ fn execute_up() {
         .expect("Failed to execute evemu-event");
 }
 
-fn execute_down() {
+fn execute_pagedown() {
     Command::new("sh")
         .arg("-c")
         .arg(
@@ -78,4 +74,12 @@ fn execute_down() {
         )
         .output()
         .expect("Failed to execute evemu-event");
+}
+
+fn execute_command(i: i32) {
+    if i < 0 {
+        execute_pageup()
+    } else {
+        execute_pagedown()
+    }
 }
