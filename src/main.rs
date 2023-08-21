@@ -6,12 +6,12 @@ use sudo::RunningAs;
 const DEVICE_EVENT: &str = "type 2 (EV_REL), code 6 (REL_HWHEEL), value";
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // if sudo::check() != RunningAs::Root {
-    //     return match sudo::escalate_if_needed() {
-    //         Ok(_) => Ok(()),
-    //         Err(e) => Err(e),
-    //     };
-    // }
+    if sudo::check() != RunningAs::Root {
+        return match sudo::escalate_if_needed() {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        };
+    }
 
     let child = Command::new("evtest")
         .arg("/dev/input/event6")
