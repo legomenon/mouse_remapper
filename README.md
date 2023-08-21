@@ -68,3 +68,7 @@ To run the `mouse-remapper` utility without needing to enter the password each t
 3. Save and exit the `visudo` editor.
 
 Now you should be able to run the `mouse-remapper` utility without needing to enter the password each time. Keep in mind that modifying the sudoers file can have security implications, so only grant privileges to specific commands that you trust.
+
+### License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
