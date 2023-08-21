@@ -2,6 +2,12 @@
 
 The `mouse-remapper` is a utility that allows you to remap mouse events to specific keyboard actions using `evtest` and `evemu-event` on Linux.
 
+## Notes
+
+- This utility uses low-level interaction with input devices and may require administrative privileges to function properly.
+- Be cautious when remapping input events, as it can have unintended consequences.
+- Customize the code to suit your specific remapping needs and adjust time thresholds as necessary.
+
 ## Prerequisites
 
 - Linux operating system
@@ -37,12 +43,6 @@ The `mouse-remapper` is a utility that allows you to remap mouse events to speci
    ```
 
    The utility will monitor the specified input device using `evtest` and remap the events based on your configuration.
-
-## Notes
-
-- This utility uses low-level interaction with input devices and may require administrative privileges to function properly.
-- Be cautious when remapping input events, as it can have unintended consequences.
-- Customize the code to suit your specific remapping needs and adjust time thresholds as necessary.
 
 
 ## Configuring sudoers File
